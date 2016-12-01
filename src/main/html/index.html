@@ -1,106 +1,136 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="UTF-8">
-  <title>Swagger UI</title>
-  <link rel="icon" type="image/png" href="images/favicon-32x32.png" sizes="32x32" />
-  <link rel="icon" type="image/png" href="images/favicon-16x16.png" sizes="16x16" />
-  <link href='css/typography.css' media='screen' rel='stylesheet' type='text/css'/>
-  <link href='css/reset.css' media='screen' rel='stylesheet' type='text/css'/>
-  <link href='css/screen.css' media='screen' rel='stylesheet' type='text/css'/>
-  <link href='css/reset.css' media='print' rel='stylesheet' type='text/css'/>
-  <link href='css/print.css' media='print' rel='stylesheet' type='text/css'/>
+    <meta charset="UTF-8">
+    <title>Swagger UI</title>
+    <link rel="icon" type="image/png" href="images/favicon-32x32.png" sizes="32x32"/>
+    <link rel="icon" type="image/png" href="images/favicon-16x16.png" sizes="16x16"/>
+    <link href='css/typography.css' media='screen' rel='stylesheet' type='text/css'/>
+    <link href='css/reset.css' media='screen' rel='stylesheet' type='text/css'/>
+    <link href='css/screen.css' media='screen' rel='stylesheet' type='text/css'/>
+    <link href='css/reset.css' media='print' rel='stylesheet' type='text/css'/>
+    <link href='css/print.css' media='print' rel='stylesheet' type='text/css'/>
 
-  <script src='lib/object-assign-pollyfill.js' type='text/javascript'></script>
-  <script src='lib/jquery-1.8.0.min.js' type='text/javascript'></script>
-  <script src='lib/jquery.slideto.min.js' type='text/javascript'></script>
-  <script src='lib/jquery.wiggle.min.js' type='text/javascript'></script>
-  <script src='lib/jquery.ba-bbq.min.js' type='text/javascript'></script>
-  <script src='lib/handlebars-4.0.5.js' type='text/javascript'></script>
-  <script src='lib/lodash.min.js' type='text/javascript'></script>
-  <script src='lib/backbone-min.js' type='text/javascript'></script>
-  <script src='swagger-ui.js' type='text/javascript'></script>
-  <script src='lib/highlight.9.1.0.pack.js' type='text/javascript'></script>
-  <script src='lib/highlight.9.1.0.pack_extended.js' type='text/javascript'></script>
-  <script src='lib/jsoneditor.min.js' type='text/javascript'></script>
-  <script src='lib/marked.js' type='text/javascript'></script>
-  <script src='lib/swagger-oauth.js' type='text/javascript'></script>
-
-  <!-- Some basic translations -->
-  <!-- <script src='lang/translator.js' type='text/javascript'></script> -->
-  <!-- <script src='lang/ru.js' type='text/javascript'></script> -->
-  <!-- <script src='lang/en.js' type='text/javascript'></script> -->
-
-  <script type="text/javascript">
-    $(function () {
-      var url = window.location.search.match(/url=([^&]+)/);
-      if (url && url.length > 1) {
-        url = decodeURIComponent(url[1]);
-      } else {
-        url = "http://petstore.swagger.io/v2/swagger.json";
-      }
-
-      hljs.configure({
-        highlightSizeThreshold: 5000
-      });
-
-      // Pre load translate...
-      if(window.SwaggerTranslator) {
-        window.SwaggerTranslator.translate();
-      }
-      window.swaggerUi = new SwaggerUi({
-        url: url,
-        dom_id: "swagger-ui-container",
-        supportedSubmitMethods: ['get', 'post', 'put', 'delete', 'patch'],
-        onComplete: function(swaggerApi, swaggerUi){
-          if(typeof initOAuth == "function") {
-            initOAuth({
-              clientId: "your-client-id",
-              clientSecret: "your-client-secret-if-required",
-              realm: "your-realms",
-              appName: "your-app-name",
-              scopeSeparator: " ",
-              additionalQueryStringParams: {}
-            });
-          }
-
-          if(window.SwaggerTranslator) {
-            window.SwaggerTranslator.translate();
-          }
-        },
-        onFailure: function(data) {
-          log("Unable to Load SwaggerUI");
-        },
-        docExpansion: "none",
-        jsonEditor: false,
-        defaultModelRendering: 'schema',
-        showRequestHeaders: false
-      });
-
-      window.swaggerUi.load();
-
-      function log() {
-        if ('console' in window) {
-          console.log.apply(console, arguments);
+    <style type="text/css">
+        div#api_info {
+            text-align: center;
         }
-      }
-  });
-  </script>
+    </style>
 </head>
 
 <body class="swagger-section">
 <div id='header'>
-  <div class="swagger-ui-wrap">
-    <a id="logo" href="http://swagger.io"><img class="logo__img" alt="swagger" height="30" width="30" src="images/logo_small.png" /><span class="logo__title">swagger</span></a>
-    <form id='api_selector'>
-      <div class='input'><input placeholder="http://example.com/api" id="input_baseUrl" name="baseUrl" type="text"/></div>
-      <div id='auth_container'></div>
-      <div class='input'><a id="explore" class="header__btn" href="#" data-sw-translate>Explore</a></div>
-    </form>
-  </div>
+    <div class="swagger-ui-wrap">
+        <a id="logo" href="http://swagger.io"><img class="logo__img" alt="swagger" height="30" width="30"
+                                                   src="images/logo_small.png"/><span class="logo__title">swagger</span></a>
+        <form id='api_selector' method="get" action="doc.html">
+            <div class='input'><input placeholder="http://example.com/api" id="input_baseUrl" name="url"
+                                      type="text"/></div>
+            <div id='auth_container'></div>
+            <div class='input'><input type="submit" id="explore" class="header__btn" value="Explore"/></div>
+        </form>
+    </div>
 </div>
 
 <div id="message-bar" class="swagger-ui-wrap" data-sw-translate>&nbsp;</div>
-<div id="swagger-ui-container" class="swagger-ui-wrap"></div>
+<div id="swagger-ui-container" class="swagger-ui-wrap">
+    <div class="info" id="api_info">
+        <img src="images/exaprint_logo.png">
+        <div class="info_title">Exprint swagger documentations</div>
+        <div class="info_description markdown"><p>List of exprint swagger documentations</p></div>
+    </div>
+    <div class="container" id="resources_container">
+        <div class="authorize-wrapper"></div>
+        <ul id="resources">
+            <li id="resource_default" class="resource active">
+                <ul class="endpoints" id="default_endpoint_list" style="display: block;">
+                    <li class="endpoint">
+                        <ul class="operations" id="endpoint_list">
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<script type='text/javascript'>
+    const ENV = {
+        DEV: {
+            label: 'Dev',
+            operationClass: 'put'
+        },
+        STAGE: {
+            label: 'Stage',
+            operationClass: 'get'
+        },
+        PROD: {
+            label: 'Prod',
+            operationClass: 'post'
+        }
+    };
+
+    var links = [
+        {
+            title: 'MCP-FulFiller Adapter',
+            env: ENV.STAGE,
+            swagger_file_url: 'https://stg-mcp-fulfiller-adapter.exaprint.fr/api-docs.json'
+        },
+        {
+            title: 'MCP-FulFiller Adapter',
+            env: ENV.PROD,
+            swagger_file_url: 'https://stg-mcp-fulfiller-adapter.exaprint.fr/api-docs.json'
+        }
+    ];
+
+    /**
+     * Create a link element in a Swagger style
+     *
+     * @param link
+     */
+    var displayLinks = function(value) {
+        //<li class="get operation">
+        var item = document.createElement('li');
+        item.className = value.env.operationClass + " operation";
+        document.getElementById('endpoint_list').appendChild(item);
+
+        //<div class="heading">
+        var heading = document.createElement('div');
+        heading.className = "heading";
+        item.appendChild(heading);
+
+        //<h3>
+        var h3 = document.createElement('h3');
+        heading.appendChild(h3);
+
+        //<span class="http_method">
+        var spanMethod = document.createElement('span');
+        spanMethod.className = "http_method";
+        h3.appendChild(spanMethod);
+
+        //<a> Link with environment label
+        var env = document.createElement('a');
+        env.href = '/doc.html?url=' +  value.swagger_file_url;
+        env.innerText = value.env.label;
+        spanMethod.appendChild(env);
+
+        //<span class="path">
+        var spanPath = document.createElement('span');
+        spanPath.className = "path";
+        h3.appendChild(spanPath);
+
+        //<a> Link with title
+        var link = document.createElement('a');
+        link.href = env.href;
+        link.innerText = value.title;
+        spanPath.appendChild(link);
+    };
+
+    var nbLink = links.length;
+    for(var i = 0; i < nbLink; i++) {
+        displayLinks(links[i]);
+    }
+
+</script>
 </body>
 </html>

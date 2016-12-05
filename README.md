@@ -253,3 +253,38 @@ limitations under the License.
 
 ---
 <img src="http://swagger.io/wp-content/uploads/2016/02/logo.jpg"/>
+
+---
+---
+
+# Exaprint
+
+## Add a new item to homepage list
+
+Simply edit `src/main/html/index.html`. At the end of file go to JS section and edit `links` variable.
+
+```javascript
+var links = [
+    {
+        title: 'MCP-FulFiller Adapter',
+        env: ENV.STAGE,
+        swagger_file_url: 'https://stg-mcp-fulfiller-adapter.exaprint.fr/api-docs.json'
+    },
+    {
+        title: 'MCP-FulFiller Adapter',
+        env: ENV.PROD,
+        swagger_file_url: 'https://stg-mcp-fulfiller-adapter.exaprint.fr/api-docs.json'
+    },
+    {
+        title: 'My Awesome website',
+        env: ENV.PROD,
+        swagger_file_url: 'https://my.awesome.api/api-docs.json'
+    }
+];
+```
+
+Then build the project with gulp cmd:
+
+```bash
+    $ gulp build
+```
